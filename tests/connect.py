@@ -17,5 +17,6 @@ while 1:
 
       # distance to next waypoint
       msg = the_connection.recv_match(type='NAV_CONTROLLER_OUTPUT',blocking=True)
-
-      print(msg)
+      
+      system = the_connection.recv_match(type='SYS_STATUS', blocking=True)
+      print(pos)

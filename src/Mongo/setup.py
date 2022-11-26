@@ -14,11 +14,11 @@ def mongoConnectRoverBySerial(rover,dataCollection):
         mongoInsertRover(rover=rover,dataCollection=dataCollection)
     
 def mongoUpdateRoverBySerial(rover,dataCollection):
-    dataCollection.update_one({'serial': rover.serial}, {'$set': {'battery': rover.battery, 'location': {
+    dataCollection.update_one({'serial': rover.serial}, {'$set': {'battery': rover.battery, 'workingStatus': False, 'location': {
             'lat': rover.lat, 'lon': rover.lon}}})
-    print('DRONE UPDATED')
+    print('ROVER UPDATED')
 
 def mongoInsertRover(rover,dataCollection):
     dataCollection.insert_one({'serial': rover.serial, 'battery': rover.battery, 'location': {
-            'lat': rover.lat, 'lon': rover.lon}, 'takeOffStatus': False, 'userId': None})
-    print('DRONE ADDED')
+            'lat': rover.lat, 'lon': rover.lon}, 'workingStatus': False})
+    print('ROVER ADDED')
