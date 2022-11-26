@@ -33,3 +33,34 @@ class Rover:
             mode_id)
         msg = self.vehicle.recv_match(type='COMMAND_ACK', blocking=True)
         print(msg)
+
+
+    def setupAndArm(self):
+        self.vehicle.mav.command_long_send(self.vehicle.target_system, self.vehicle.target_component,
+                                     mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, 0, 1, 0, 0, 0, 0, 0, 0)
+
+        self.vehicle.mav.command_long_encode(
+		0, 0,
+		mavutil.mavlink.MAV_CMD_DO_SET_REVERSE,
+		0,
+		1,
+		0,
+		0,
+		0,
+		0,0, 0)
+
+    def moveForward(self):
+        self.vehicle.mav.send(mavutil.mavlink.MAVLink_set_position_target_local_ned_message(10, self.vehicle.target_system,
+                         self.vehicle.target_component, mavutil.mavlink.MAV_FRAME_BODY_OFFSET_NED, int(0b110111000111), 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0))
+
+    def moveBackward(self):
+        self.vehicle.mav.send(mavutil.mavlink.MAVLink_set_position_target_local_ned_message(10, self.vehicle.target_system,
+                         self.vehicle.target_component, mavutil.mavlink.MAV_FRAME_BODY_OFFSET_NED, int(0b11011100111), 0, 0, 0, -2, 0, 0, 0, 0, 0, 0, 0))
+
+    def changeYaw(self):
+        t = 0
+        while t < 20:
+            t = t+1
+            time.sleep(1)
+            self.vehicle.mav.send(mavutil.mavlink.MAVLink_set_position_target_local_ned_message(10, self.vehicle.target_system,
+                                self.vehicle.target_component, mavutil.mavlink.MAV_FRAME_BODY_OFFSET_NED , int(0b100111100111), 0, 0, 0, 0.5, 0, 0, 0, 0, 0, 0.8, 0))
