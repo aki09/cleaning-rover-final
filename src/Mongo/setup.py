@@ -14,7 +14,7 @@ def mongoConnectRoverBySerial(rover,dataCollection):
         mongoInsertRover(rover=rover,dataCollection=dataCollection)
     
 def mongoUpdateRoverBySerial(rover,dataCollection):
-    dataCollection.update_one({'serial': rover.serial}, {'$set': {'battery': rover.battery, 'workingStatus': False, 'location': {
+    dataCollection.update_one({'serial': rover.serial}, {'$set': {'battery': rover.battery, 'workingStatus': rover.workingStatus, 'location': {
             'lat': rover.lat, 'lon': rover.lon}}})
     print('ROVER UPDATED')
 
