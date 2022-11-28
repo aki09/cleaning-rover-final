@@ -34,7 +34,6 @@ def mainStart(serial=None, connection=None,dataCollection=None):
         rover = Rover(roverSerial=serial,connection=connection)
         initRoverOnMongo(rover=rover,dataCollection=dataCollection)
         data_streams(rover=rover, dataCollection=dataCollection)
-        cleanArea(rover=rover, dataCollection=dataCollection)
 
 if __name__ == '__main__':
     pass
