@@ -33,11 +33,14 @@ def data_streams(rover,dataCollection):
 
 def cleanArea(rover, dataCollection,exit_event):
     try:
+        #Check if cleaning should start
+        print('check drone status')
         rover.workingStatus = True
         rover.setupAndArm()
         rover.changeVehicleMode('GUIDED')
         print('Cleaning Started')
         #currently without ultrasonic sensor
+
         j = 0
         while j < 2:
             i = 0
@@ -54,6 +57,7 @@ def cleanArea(rover, dataCollection,exit_event):
             rover.moveForward(0.2)
             rover.changeYaw(-0.8)
             j = j + 1
+
         rover.workingStatus = False
 
     except KeyboardInterrupt:

@@ -1,6 +1,8 @@
 from pymavlink import mavutil
 import time
 
+from ..Ultrasonic import *
+
 class Rover:
     def __init__(self,roverSerial,connection):
         vehicle = mavutil.mavlink_connection(connection)
@@ -18,6 +20,10 @@ class Rover:
         self.battery=system.battery_remaining
         self.vehicle=vehicle
         self.workingStatus=False
+        self.ul_front_edge = Ultrasonic(21,22)
+        self.ul_front_next = Ultrasonic(13,14)
+        self.ul_back_edge = Ultrasonic(7,8)
+        self.ul_back_next = Ultrasonic(17,18)
 
 
     def changeVehicleMode(self,mode):
