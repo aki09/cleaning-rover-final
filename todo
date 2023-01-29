@@ -1,0 +1,2 @@
+assign roverStatus and droneStatus somehow
+maybe hardcoding or direcly by mongo(make a field roverSerial in droneDataCollection and droneSerial in roverDataCollection)keybo
