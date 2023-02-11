@@ -11,7 +11,6 @@ def free(rover):
 def init(rover,droneDataCollection,DroneStatus,RoverStatus):
     print("Rover is initializing.")
     rover.roverStatus=RoverStatus.INIT
-    # rover.roverStatus='Init'
     print("Assumning Rover is inside Drone initially")
     print("------------------Drop Rover---------------------")
     Mongo.mongoUpdateDroneStatusBySerial(rover,droneDataCollection=droneDataCollection,statusValue=DroneStatus.DOCK)
@@ -65,8 +64,6 @@ def roverUnDock(rover,roverDataCollection,droneDataCollection,DroneStatus,RoverS
     rover.roverStatus=RoverStatus.CLEANING
     Mongo.mongoUpdateRoverBySerial(rover=rover,roverDataCollection=roverDataCollection)
 
-    # Mongo.mongoUpdateRoverStatus(rover=rover,roverDataCollection=roverDataCollection,statusValue=RoverStatus.CLEANING)
-
     print("--------Start Cleaning-------")
     # Cleaning Algo called here
     print("Cleaning Complete")
@@ -78,8 +75,6 @@ def roverUnDock(rover,roverDataCollection,droneDataCollection,DroneStatus,RoverS
     Mongo.mongoUpdateDroneStatusBySerial(rover=rover,droneDataCollection=droneDataCollection,statusValue=DroneStatus.PICKUP)
     rover.roverStatus=RoverStatus.PICKUP
     Mongo.mongoUpdateRoverBySerial(rover=rover,roverDataCollection=roverDataCollection)
-
-    # Mongo.mongoUpdateRoverStatus(rover=rover,roverDataCollection=roverDataCollection,statusValue=RoverStatus.PICKUP)
 
     return
 
@@ -96,14 +91,10 @@ def roverDock(rover,roverDataCollection,droneDataCollection,DroneStatus,RoverSta
     rover.roverStatus=RoverStatus.BUSY
     Mongo.mongoUpdateRoverBySerial(rover=rover,roverDataCollection=roverDataCollection)
 
-    # Mongo.mongoUpdateRoverStatus(rover=rover,roverDataCollection=roverDataCollection,statusValue=RoverStatus.BUSY)
-
     # Go back home
     Mongo.mongoUpdateDroneStatusBySerial(rover=rover,droneDataCollection=droneDataCollection,statusValue=DroneStatus.GO_HOME)
     rover.roverStatus=RoverStatus.BUSY
     Mongo.mongoUpdateRoverBySerial(rover=rover,roverDataCollection=roverDataCollection)
-
-    # Mongo.mongoUpdateRoverStatus(rover=rover,roverDataCollection=roverDataCollection,statusValue=RoverStatus.BUSY)
 
     return
 

@@ -27,10 +27,6 @@ def mongoUpdateDroneStatusBySerial(rover,droneDataCollection,statusValue):
     droneDataCollection.update_one({'serial': rover.droneSerial}, {'$set': {'droneStatus': statusValue.value}})
     rover.droneStatus=statusValue
     print('DRONE STATUS UPDATED')
-
-# def mongoUpdateRoverStatus(rover,roverDataCollection,statusValue):
-#     roverDataCollection.update_one({'serial': rover.serial}, {'$set': {'roverStatus': statusValue.value}})
-#     rover.roverStatus=statusValue
-#     print('DRONE STATUS UPDATED')  
+  
 
     
