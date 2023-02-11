@@ -21,7 +21,9 @@ class DroneStatus(Enum):
     NEXT_PANEL=5
     DOCK = 6
     PICKUP = 7
-    DROPPED = 8
+    DROP = 8
+    DROPPED = 9
+    WAITING=10
 
 class Rover:
     def __init__(self,roverSerial,connection):

@@ -13,7 +13,7 @@ def init(rover,droneDataCollection,DroneStatus,RoverStatus):
     rover.roverStatus=RoverStatus.INIT
     print("Assumning Rover is inside Drone initially")
     print("------------------Drop Rover---------------------")
-    Mongo.mongoUpdateDroneStatusBySerial(rover,droneDataCollection=droneDataCollection,statusValue=DroneStatus.DOCK)
+    Mongo.mongoUpdateDroneStatusBySerial(rover,droneDataCollection=droneDataCollection,statusValue=DroneStatus.DROP)
     return 
 
 def dock(rover,roverDataCollection,droneDataCollection,DroneStatus,RoverStatus,exit_event):

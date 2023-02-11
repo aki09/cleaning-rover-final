@@ -20,7 +20,7 @@ def mongoUpdateRoverBySerial(rover,roverDataCollection):
 
 def mongoInsertRover(rover,roverDataCollection):
     roverDataCollection.insert_one({'serial': rover.serial, 'battery': rover.battery, 'location': {
-            'lat': rover.lat, 'lon': rover.lon}, 'workingStatus': False,'roverStatus':"Free"})
+            'lat': rover.lat, 'lon': rover.lon}, 'workingStatus': False,'roverStatus':1})
     print('ROVER ADDED')
 
 def mongoUpdateDroneStatusBySerial(rover,droneDataCollection,statusValue):
