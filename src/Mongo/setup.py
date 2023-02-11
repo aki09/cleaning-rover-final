@@ -1,4 +1,5 @@
 import pymongo
+from ..Rover import RoverStatus,DroneStatus
 
 def mongoConnect(mongoUrl,database,collection):
     mc = pymongo.MongoClient(mongoUrl)
@@ -13,7 +14,7 @@ def mongoConnectRoverBySerial(rover,roverDataCollection):
         mongoInsertRover(rover=rover,dataCollection=roverDataCollection)
     
 def mongoUpdateRoverBySerial(rover,roverDataCollection):
-    roverDataCollection.update_one({'serial': rover.serial}, {'$set': {'battery': rover.battery, 'workingStatus': rover.workingStatus, 'location': {
+    roverDataCollection.update_one({'serial': rover.serial}, {'$set': {'battery': rover.battery, 'roverStatus': rover.roverStatus.value ,'workingStatus': rover.workingStatus, 'location': {
             'lat': rover.lat, 'lon': rover.lon}}})
     print('ROVER UPDATED')
 
@@ -22,14 +23,14 @@ def mongoInsertRover(rover,roverDataCollection):
             'lat': rover.lat, 'lon': rover.lon}, 'workingStatus': False,'roverStatus':"Free"})
     print('ROVER ADDED')
 
-def mongoUpdateDroneStatus(rover,droneDataCollection,status):
-    droneDataCollection.update_one({'serial': rover.droneSerial}, {'$set': {'droneStatus': status}})
-    rover.droneStatus=status
+def mongoUpdateDroneStatusBySerial(rover,droneDataCollection,statusValue):
+    droneDataCollection.update_one({'serial': rover.droneSerial}, {'$set': {'droneStatus': statusValue.value}})
+    rover.droneStatus=statusValue
     print('DRONE STATUS UPDATED')
 
-def mongoUpdateRoverStatus(rover,roverDataCollection,status):
-    roverDataCollection.update_one({'serial': rover.serial}, {'$set': {'roverStatus': status}})
-    rover.roverStatus=status
-    print('DRONE STATUS UPDATED')  
+# def mongoUpdateRoverStatus(rover,roverDataCollection,statusValue):
+#     roverDataCollection.update_one({'serial': rover.serial}, {'$set': {'roverStatus': statusValue.value}})
+#     rover.roverStatus=statusValue
+#     print('DRONE STATUS UPDATED')  
 
     

@@ -1,85 +1,84 @@
-from .util import keyboard_shutdown
-import time
-from .Mongo import * 
-def roverUnDock(rover,roverDataCollection,droneDataCollection,exit_event):
-    for i in range(5):
-        time.sleep(1)
-        print("UnDocking")
+# from .util import keyboard_shutdown
+# import time
+# from .Mongo import * 
 
-    print("UnDocked, now going to starting position")
-    for i in range(5):
-        time.sleep(1)
-        print("Moving towards start location")
-    print("Ready to clean")
+# def roverUnDock(rover,roverDataCollection,droneDataCollection,exit_event):
+#     for i in range(5):
+#         time.sleep(1)
+#         print("UnDocking")
 
-    print("Sending drone back")
-    mongoUpdateDroneStatus(rover=rover,droneDataCollection=droneDataCollection,status="waitAtHome")
-    mongoUpdateRoverStatus(rover=rover,roverDataCollection=roverDataCollection,status="Cleaning")
+#     print("UnDocked, now going to starting position")
+#     for i in range(5):
+#         time.sleep(1)
+#         print("Moving towards start location")
+#     print("Ready to clean")
 
-    print("--------Start Cleaning-------")
-    # Cleaning Algo called here
-    print("Cleaning Complete")
-    for i in range(5):
-        time.sleep(1)
-        print("Moving towards pickup location")
-    print("Calling Drone to pickup")
+#     print("Sending drone back")
+#     mongoUpdateDroneStatus(rover=rover,droneDataCollection=droneDataCollection,status="waitAtHome")
+#     # mongoUpdateRoverStatus(rover=rover,roverDataCollection=roverDataCollection,status=rover.)
+#     mongoUpdateRoverStatus(rover=rover,roverDataCollection=roverDataCollection,status="Cleaning")
 
-    mongoUpdateDroneStatus(rover=rover,droneDataCollection=droneDataCollection,status="Pickup")
-    mongoUpdateRoverStatus(rover=rover,roverDataCollection=roverDataCollection,status="Pickup")
+#     print("--------Start Cleaning-------")
+#     # Cleaning Algo called here
+#     print("Cleaning Complete")
+#     for i in range(5):
+#         time.sleep(1)
+#         print("Moving towards pickup location")
+#     print("Calling Drone to pickup")
 
-    return
+#     mongoUpdateDroneStatus(rover=rover,droneDataCollection=droneDataCollection,status="Pickup")
+#     mongoUpdateRoverStatus(rover=rover,roverDataCollection=roverDataCollection,status="Pickup")
 
-def roverDock(rover,roverDataCollection,droneDataCollection,exit_event):
-    for i in range(5):
-        time.sleep(1)
-        print("Docking")
+#     return
 
-    print("Docked")
-    print("Sending drone to next panel")
+# def roverDock(rover,roverDataCollection,droneDataCollection,exit_event):
+#     for i in range(5):
+#         time.sleep(1)
+#         print("Docking")
 
-    # Go to next panel
-    mongoUpdateDroneStatus(rover=rover,droneDataCollection=droneDataCollection,status="nextPanel")
-    mongoUpdateRoverStatus(rover=rover,roverDataCollection=roverDataCollection,status="Busy")
+#     print("Docked")
+#     print("Sending drone to next panel")
 
-    # Go back home
-    mongoUpdateDroneStatus(rover=rover,droneDataCollection=droneDataCollection,status="goHome")
-    mongoUpdateRoverStatus(rover=rover,roverDataCollection=roverDataCollection,status="Busy")
+#     # Go to next panel
+#     mongoUpdateDroneStatus(rover=rover,droneDataCollection=droneDataCollection,status="nextPanel")
+#     mongoUpdateRoverStatus(rover=rover,roverDataCollection=roverDataCollection,status="Busy")
 
-    return
+#     # Go back home
+#     mongoUpdateDroneStatus(rover=rover,droneDataCollection=droneDataCollection,status="goHome")
+#     mongoUpdateRoverStatus(rover=rover,roverDataCollection=roverDataCollection,status="Busy")
 
+#     return
 
+# def cleanArea(rover, roverDataCollection,droneDataCollection,exit_event):
+#     try:
+#         #Check if cleaning should start
+#         print('check drone status')
+#         rover.workingStatus = True
+#         rover.setupAndArm()
+#         rover.changeVehicleMode('GUIDED')
+#         print('Cleaning Started')
+#         #currently without ultrasonic sensor
 
+#         j = 0
+#         while j < 2:
+#             i = 0
+#             while i < 5:
+#                 i = i + 1
+#                 time.sleep(1)
+#                 rover.moveForward(0.5)
+#             i = 0
+#             while i < 5:
+#                 i = i + 1
+#                 time.sleep(1)
+#                 rover.moveBackward(0.5)
+#             rover.changeYaw(0.8)
+#             rover.moveForward(0.2)
+#             rover.changeYaw(-0.8)
+#             j = j + 1
 
-def cleanArea(rover, roverDataCollection,droneDataCollection,exit_event):
-    try:
-        #Check if cleaning should start
-        print('check drone status')
-        rover.workingStatus = True
-        rover.setupAndArm()
-        rover.changeVehicleMode('GUIDED')
-        print('Cleaning Started')
-        #currently without ultrasonic sensor
+#         rover.workingStatus = False
 
-        j = 0
-        while j < 2:
-            i = 0
-            while i < 5:
-                i = i + 1
-                time.sleep(1)
-                rover.moveForward(0.5)
-            i = 0
-            while i < 5:
-                i = i + 1
-                time.sleep(1)
-                rover.moveBackward(0.5)
-            rover.changeYaw(0.8)
-            rover.moveForward(0.2)
-            rover.changeYaw(-0.8)
-            j = j + 1
-
-        rover.workingStatus = False
-
-    except KeyboardInterrupt:
-        keyboard_shutdown()
+#     except KeyboardInterrupt:
+#         keyboard_shutdown()
 
    

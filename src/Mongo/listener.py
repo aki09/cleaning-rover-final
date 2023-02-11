@@ -1,8 +1,9 @@
 import time
 from threading import Event, Thread
 from ..util import keyboard_shutdown
-from .setup import mongoUpdateRoverBySerial,mongoUpdateDroneStatus
-from ..roverClean import roverUnDock,roverDock
+from .setup import mongoUpdateRoverBySerial,mongoUpdateDroneStatusBySerial
+# from ..roverClean import roverUnDock,roverDock
+
 def updateRoverData(dataCollection,rover):
     try:
         while True:
@@ -31,7 +32,7 @@ def listenerMongoData(rover,roverDataCollection,droneDataCollection,exit_event):
         for document in roverDataCollection.watch(pipeline=pipelineRoverStatus, full_document='updateLookup'):
             if document['fullDocument']['serial'] == serial:
                 
-                updated_roverStatus = document['fullDocument']['droneStatus']
+                updated_roverStatus = document['fullDocument']['roverStatus']
                 roverSerial = document['fullDocument']['serial']
                 print("Change in rover status")
                 print(updated_roverStatus)
@@ -40,35 +41,36 @@ def listenerMongoData(rover,roverDataCollection,droneDataCollection,exit_event):
                     # print("Edge case, Deal later")
                     
                 if roverSerial == serial:
+                    rover.handle_rover_status(updated_roverStatus,droneDataCollection,roverDataCollection,exit_event)
                     # if(mongoRoverStatus(drone=drone,roverDataCollection=roverDataCollection)=="Free"):
                     # if((drone.droneStatus=="Free") and updated_roverStatus=="Drop"):
-                    if(updated_roverStatus=="Init"):
-                        rover.roverStatus='Init'
-                        print("Assumning Rover is inside Drone initially")
-                        print("------------------Drop Rover---------------------")
-                        mongoUpdateDroneStatus(rover,droneDataCollection=droneDataCollection,status="Drop")
-                        # t = Thread(target=droneCleanDrop,
+                    # if(updated_roverStatus=="Init"):
+                    #     rover.roverStatus='Init'
+                    #     print("Assumning Rover is inside Drone initially")
+                    #     print("------------------Drop Rover---------------------")
+                    #     mongoUpdateDroneStatusBySerial(rover,droneDataCollection=droneDataCollection,status="Drop")
+                    #     # t = Thread(target=droneCleanDrop,
                         #         args=(drone,exit_event,droneDataCollection,roverDataCollection))
                         # # t = Thread(target=droneCleanDrop,
                         # #        args=(drone,exit_event,droneDataCollection,roverDataCollection=roverDataCollection))
                         # t.start()
 
-                    elif(updated_roverStatus=="UnDock"):
-                        print("Undock Rover")
-                        print("------------------Undock Rover---------------------")
-                        t = Thread(target=roverUnDock,
-                                   args=(rover,roverDataCollection,droneDataCollection,exit_event))
-                        t.start()
+                    # elif(updated_roverStatus=="UnDock"):
+                    #     print("Undock Rover")
+                    #     print("------------------Undock Rover---------------------")
+                    #     t = Thread(target=roverUnDock,
+                    #                args=(rover,roverDataCollection,droneDataCollection,exit_event))
+                    #     t.start()
 
-                    elif(updated_roverStatus=="Dock"):
-                        print("Dock Rover")
-                        print("------------------Dock Rover---------------------")
-                        t = Thread(target=roverDock,
-                                   args=(rover,roverDataCollection,droneDataCollection,exit_event))
-                        t.start()
+                    # elif(updated_roverStatus=="Dock"):
+                    #     print("Dock Rover")
+                    #     print("------------------Dock Rover---------------------")
+                    #     t = Thread(target=roverDock,
+                    #                args=(rover,roverDataCollection,droneDataCollection,exit_event))
+                    #     t.start()
        
-                    else:
-                        pass
+                    # else:
+                    #     pass
                     
 
                 # elif updated_takeOffStatus == False and roverSerial == serial:
