@@ -27,9 +27,6 @@ the_connection.mav.command_long_send(the_connection.target_system, the_connectio
 msg = the_connection.recv_match(type='COMMAND_ACK', blocking=True)
 print(msg)
 
-t = 0
-while t < 20:
-    t = t+1
-    time.sleep(1)
-    the_connection.mav.send(mavutil.mavlink.MAVLink_set_position_target_local_ned_message(10, the_connection.target_system,
-                         the_connection.target_component, mavutil.mavlink.MAV_FRAME_BODY_OFFSET_NED , int(0b100111100111), 0, 0, 0, 0.5, 0, 0, 0, 0, 0, 0.8, 0))
+
+the_connection.mav.send(mavutil.mavlink.MAVLink_set_position_target_local_ned_message(10, the_connection.target_system,
+                         the_connection.target_component, mavutil.mavlink.MAV_FRAME_BODY_OFFSET_NED , int(0b100111100111), 0, 0, 0, 0.5, 0, 0, 0, 0, 0, -1.57, 0))
